@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\usuarioController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +23,21 @@ Route::get('/usuarios', function () {
     return view('usuarios');
 });
 
+
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
 Route::middleware(['auth'])->group(function () {
     Route::post('/usuarios', [usuarioController::class,"Registrar"])->name('usuario.registro');
     Route::get('/usuarios', [usuarioController::class,"Buscar"])->name('usuario.buscar');
 });
+
