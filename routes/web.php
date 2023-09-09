@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::middleware(['auth:api'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 Route::get('/', function () {
     return view('home');
 });
@@ -28,14 +28,10 @@ Route::get('/usuarios', [usuarioController::class,"Buscar"])->name('usuario.busc
 });
 
 Route::get('/login', function () {
-    return view('login');
+    return view('login');})->name('login');;
 
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-});
-
-
-Route::post('/login', [LoginController::class, 'login'])->name('login');
-
+Route::post('/login', [LoginController::class, 'Login'])->name('Login');
+Route::get('/logout', [LoginController::class, 'Logout'])->name('Logout');
 
 
 
