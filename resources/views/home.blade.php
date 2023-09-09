@@ -6,6 +6,6 @@
     <title>Home</title>
 </head>
 <body>
-    
+    <h1> Bienvenido <b>{{ Auth::user()->Persona->nombre }}.</b> <a href="/logout">Logout</a></h1>
 </body>
 </html>

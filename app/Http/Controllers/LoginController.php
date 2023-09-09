@@ -8,40 +8,16 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    public function login(Request $request)
-{
-    $response = Http::asForm()->post('http://localhost:8001/oauth/token', [
-        'grant_type' => 'password',
-        'client_id' => env('CLIENT_ID'),
-        'client_secret' => env('CLIENT_SECRET'),
-        'username' => $request->input('email'),
-        'password' => $request->input('password'),
-        'scope' => '',
-    ]);
-
-    if ($response->successful()) {
-        $accessToken = $response->json()['access_token'];;
-        Session::put('api_token', $accessToken);
-        return redirect('/');
-    } else {
-        $error = $response->json()['error'];
-
-        return back()->withInput()->withErrors(['login' => $error]);
+    public function Login(Request $request){
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials)) 
+            return redirect("/");
+        return redirect("/login")->with("failed",true);
     }
-}
 
-public function logout(Request $request)
-{
-
-    $apiToken = session('api_token');
-    if ($apiToken) {
+    public function Logout(Request $request){
         Auth::logout();
-        $request->session()->forget('api_token');
-
-        return redirect('/login')->with('logout', true);
+        return redirect("/login")->with("logout",true);
     }
-
-    return redirect('/');
-}
 
 }
