@@ -1,0 +1,87 @@
+/* Gestión de Usuarios*/
+:root {
+    --dark: #396E00;
+    --green: #69a114;
+    --yellow: #ecb828;
+    --white: #ffff;
+    --celad: #b9f5d8;
+    --grey: #868784;
+}
+.main {
+    text-align: center;
+}
+
+.gestor-usuarios {
+    margin: 60px;
+    background-color: rgba(183, 179, 179, 0.2);
+    padding: 150px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+h1 {
+    font-size: 24px;
+}
+
+h2 {
+    font-size: 18px;
+    text-align: center;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: var(--green);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#lista-usuarios {
+    margin-top: 20px;
+}
+
+#agregar-usuario-form {
+    text-align: left; /* Alinea el contenido del formulario a la izquierda */
+    max-width: 300px; /* Establece un ancho máximo para el formulario */
+    margin: 0 auto; /* Centra el formulario horizontalmente */
+}
+
+#agregar-usuario-form h2 {
+    font-size: 18px; /* Reduce el tamaño del título del formulario */
+}
+
+#agregar-usuario-form label {
+    display: block;
+    margin-top: 10px;
+}
+
+#agregar-usuario-form input[type="text"],
+#agregar-usuario-form input[type="email"],
+#agregar-usuario-form input[type="number"] {
+    width: 100%; /* Ancho completo para campos de entrada */
+    padding: 8px; /* Reduce el espacio interno */
+    margin-top: 5px;
+}
+
+#agregar-usuario-form button {
+    width: 100%; /* Ancho completo para el botón */
+    margin-top: 10px;
+}
+
+#label-form label{
+        display: block;
+        margin-top: 10px;
+}
