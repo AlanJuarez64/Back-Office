@@ -12,42 +12,24 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    protected $table = 'users';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'name',
         'email',
         'password',
+        'Nombre_Completo', 'CI',
+        'Latitud', 'Longitud'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
+        'remember_token'
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-
-
-    public static function Buscar($terminodeBusqueda)
-    {
-        return self::where('name', 'like', "%$terminodeBusqueda%")
-            ->orWhere('email', 'like', "%$terminodeBusqueda%")
-            ->get();
-    }
 }
