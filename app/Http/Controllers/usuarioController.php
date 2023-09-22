@@ -5,37 +5,41 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
-class usuarioController extends Controller
+class UsuarioController extends Controller
 {
 
     public function verTodos()
     {
         $users = User::all();
-        return response()->json(['data' => $users], 200);
+        return view('usuarios', ['users' => $users]);
     }
-
 
 
     public function Registrar(Request $request)
     {
-        $data = $request->validate([
+        $validation = Validator::make($request->all(),[
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6',
         ]);
-
-        $user = User::create($data);
-
-        return response()->json(['message' => 'Usuario creado con éxito', 'data' => $user], 201);
+        
+        if ($validation->fails()) {
+            return redirect('/usuarios')->withErrors($validation)->withInput();
+        }
+    
+        $user = $this->createUser($request);
+        $message = "Usuario $user->name creado correctamente";
+    
+        return redirect('/usuarios')->with('success_message', $message);
+        
     }
-
-
-
     
 
-    public function Buscar($id)
+    public function Buscar(Request $request,$id)
     {
         $user = User::find($id);
         
@@ -69,16 +73,23 @@ class usuarioController extends Controller
     public function Eliminar($id)
     {
         $user = User::find($id);
-        
         if (!$user) {
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
 
         $user->delete();
 
-        return response()->json(['message' => 'Usuario eliminado con éxito'], 204);
+         return view('usuarios', ['user' => $user]);
     }
 
 
 
+    private function createUser($request){
+        $user = new User();
+        $user -> name = $request -> post("name");
+        $user -> email = $request -> post("email");
+        $user -> password = Hash::make($request -> post("password"));   
+        $user -> save();
+        return $user;
+    }
 }
