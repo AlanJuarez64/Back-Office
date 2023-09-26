@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\usuarioController;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\AlmacenController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,13 +20,26 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/usuarios', function () {
-    return view('usuarios');
+Route::prefix('usuarios')->group(function (){
+    Route::get('/', function () {
+        return view('usuarios');
+}   );
+
+    Route::get('/all', [UsuarioController::class, 'verTodos'])->name('usuarios.verTodos');
+    Route::post('/', [UsuarioController::class,"Registrar"])->name('usuario.registro');
+    Route::get('/{id}', [UsuarioController::class, 'Buscar'])->name('usuario.buscar');
+    Route::delete('/{id}', [UsuarioController::class, 'Eliminar'])->name('usuario.eliminar');
+
+
 });
 
-Route::post('/usuarios', [usuarioController::class,"Registrar"])->name('usuario.registro');
-Route::get('/usuarios', [usuarioController::class,"Buscar"])->name('usuario.buscar');
+Route::prefix('almacenes')->group(function (){
+    Route::get('/', [AlmacenController::class, 'VerTodo'])->name('almacen.verTodos');
+    Route::post('/', [AlmacenController::class, 'Registrar'])->name('almacen.registro');
 });
+
+});
+
 
 Route::get('/login', function () {
     return view('login');})->name('login');;
