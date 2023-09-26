@@ -72,7 +72,22 @@ table {
     background: var(--green);
 }
 
-
+#Registrar {
+    background-color: var(--green);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#Capacidad{
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    }
 /*Diseño responsive*/
 
 @media(max-width:768px){
