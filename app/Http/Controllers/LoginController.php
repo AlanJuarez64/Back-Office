@@ -12,7 +12,7 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) 
             return redirect("/");
-        return redirect("/login")->with("failed",true);
+        return redirect("/login")->with('fail', 'Nombre de usuario o contraseña incorrectos.');
     }
 
     public function Logout(Request $request){

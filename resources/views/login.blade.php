@@ -27,6 +27,13 @@
       <div>
         <button id="btn-login" type="submit">Iniciar sesión</button>
         <p class="advert" id="advert"></p>
+        @if(session('fail'))
+          <p style="color:red"><b>
+          {{ session('fail') }}
+          </b>
+          </p>
+        @endif
+
       </div>
     </form>
   </section>
