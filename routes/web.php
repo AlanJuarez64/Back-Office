@@ -21,12 +21,12 @@ Route::get('/', function () {
 });
 
 Route::prefix('usuarios')->group(function (){
+    
     Route::get('/', function () {
-        return view('usuarios');
-}   );
+        return view('usuarios');});
 
     Route::get('/all', [UsuarioController::class, 'verTodos'])->name('usuarios.verTodos');
-    Route::post('/', [UsuarioController::class,"Registrar"])->name('usuario.registro');
+    Route::post('/', [UsuarioController::class,'Registrar'])->name('usuario.registro');
     Route::get('/{id}', [UsuarioController::class, 'Buscar'])->name('usuario.buscar');
     Route::delete('/{id}', [UsuarioController::class, 'Eliminar'])->name('usuario.eliminar');
 
