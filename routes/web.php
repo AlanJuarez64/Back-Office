@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return view('home');
@@ -26,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
             return view('usuarios');});
 
         Route::get('/all', [UsuarioController::class, 'verTodos'])->name('usuarios.verTodos');
+        Route::put('/{id}', [UsuarioController::class, 'Modificar'])->name('usuarios.modificar');
         Route::post('/', [UsuarioController::class,'Registrar'])->name('usuario.registro');
         Route::get('/{id}', [UsuarioController::class, 'Buscar'])->name('usuario.buscar');
         Route::delete('/{id}', [UsuarioController::class, 'Eliminar'])->name('usuario.eliminar');
