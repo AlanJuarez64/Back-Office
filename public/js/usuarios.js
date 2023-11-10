@@ -1,4 +1,3 @@
-// Agregar usuario
 document.getElementById('agregar-usuario-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
@@ -7,18 +6,15 @@ document.getElementById('agregar-usuario-form').addEventListener('submit', funct
 
 });
 
-// Eliminar usuario
+
 document.addEventListener("DOMContentLoaded", function () {
 document.getElementById("formEliminar").addEventListener("submit", function(event) {
-    event.preventDefault(); // Evita que el formulario se envíe de inmediato
+    event.preventDefault();
 
-    // Obtiene el valor ingresado en el campo de texto
     var idBorrar = document.getElementById("idUser").value;
 
-    // Actualiza el atributo 'action' del formulario con el valor ingresado
     document.getElementById("formEliminar").action = "/usuarios/"+idBorrar;
     document.getElementById("formEliminar").method = "DELETE";
-    // Envía el formulario
     document.getElementById("formEliminar").submit();
 });
 });
