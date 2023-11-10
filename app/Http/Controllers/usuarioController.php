@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Empleado;
+use App\Models\Chofer;
+use App\Models\FuncionarioAlmacen;
+use App\Models\FuncionarioTransporte;
+use App\Models\Despachador;
 
 class UsuarioController extends Controller
 {
@@ -21,23 +26,72 @@ class UsuarioController extends Controller
 
     public function Registrar(Request $request)
     {
+        try{
         $validation = Validator::make($request->all(),[
             'name' => 'required|string',
+            'nombre_completo' => 'required|string',
+            'ci' => 'required|int|unique:users|max:8',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6',
         ]);
         
-        if ($validation->fails()) {
-            return redirect('/usuarios')->withErrors($validation)->withInput();
-        }
     
         $user = $this->createUser($request);
-        $message = "Usuario $user->name creado correctamente";
+        $empleado = $this-> crearEmpleado($user->id);
+        $tipoUsuario = $this->definirTipoUsuario($request->input('tipo_usuario'), $user->id);
+
+        $message = "El usuario $user->name, con caracteristicas de $tipoUsuario creado correctamente";
     
         return redirect('/usuarios')->with('success_message', $message);
+        }catch(ValidationException $e) {
+
+            $errors = $e->errors();
+            $message =  "Los datos ingresados son incorrectos";
+            return redirect('/usuarios')->withErrors(['error' => $message]);
+        }
         
     }
-    
+
+
+    private function createUser($request){
+        $user = new User();
+        $user -> name = $request -> post("name");
+        $user -> email = $request -> post("email");
+        $user -> password = Hash::make($request -> post("password"));   
+        $user -> Nombre_Completo = $request -> post("nombre_completo");
+        $user -> CI = $request -> post("ci");
+        $user -> save();
+
+        return $user;
+    }
+
+    private function crearEmpleado($userId){
+        $empleado = new Empleado();
+        $empleado->ID_Usuario = $userId;
+        $empleado->save();
+
+        return $empleado;
+    }
+
+    private function definirTipoUsuario($tipoUsuario, $idEmpleado){
+        
+        $clasesdeTiposUsuario = [
+            'funcionario_de_transporte' => FuncionarioTransporte::class,
+            'funcionario_de_almacen' => FuncionarioAlmacen::class,
+            'chofer' => Chofer::class,
+            'despachador' => Despachador::class,
+        ];
+        
+        
+        if (array_key_exists($tipoUsuario, $clasesdeTiposUsuario)) {
+            $obtenerClasesDeUsuario = $clasesdeTiposUsuario[$tipoUsuario];
+            $usuario = new $obtenerClasesDeUsuario;
+            $usuario->ID_Usuario = $idEmpleado;
+            $usuario->save();
+            return $tipoUsuario;
+        }
+        throw new \Exception('Tipo de usuario no válido');
+    }
 
     public function Buscar(Request $request,$id)
     {
@@ -70,26 +124,32 @@ class UsuarioController extends Controller
         return response()->json(['message' => 'Usuario actualizado con éxito', 'data' => $user], 200);
     }
 
-    public function Eliminar($id)
-    {
-        $user = User::find($id);
-        if (!$user) {
-            return response()->json(['message' => 'Usuario no encontrado'], 404);
+
+    public function Eliminar($id) {
+        try{
+        $user = User::findOrFail($id);
+        $empleado = Empleado::where('ID_Usuario', $id)->first();
+
+        if ($empleado) {
+            if ($empleado->funcionarioTransporte) {
+                FuncionarioTransporte::where('ID_Usuario', $id)->delete();
+            } elseif ($empleado->funcionarioAlmacen) {
+                FuncionarioAlmacen::where('ID_Usuario', $id)->delete();
+            } elseif ($empleado->chofer) {
+                Chofer::where('ID_Usuario', $id)->delete();
+            } elseif ($empleado->despachador) {
+                Despachador::where('ID_Usuario', $id)->delete();
+            }
+
+            $empleado->delete();
         }
+            $user->delete();
+    
 
-        $user->delete();
-
-         return view('usuarios', ['user' => $user]);
+            return redirect('/usuarios')->with('success_message', 'Usuario eliminado correctamente');
+        } catch (\Exception $e) {
+            redirect('/usuarios')->withErrors(['error' => 'Error al eliminar el usuario']);
+        }
     }
-
-
-
-    private function createUser($request){
-        $user = new User();
-        $user -> name = $request -> post("name");
-        $user -> email = $request -> post("email");
-        $user -> password = Hash::make($request -> post("password"));   
-        $user -> save();
-        return $user;
     }
-}
+    
