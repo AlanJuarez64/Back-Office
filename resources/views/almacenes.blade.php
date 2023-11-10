@@ -16,7 +16,22 @@
 <div class="main">
         @include("/common/topbar")
 
+
+        
         <div class="detalles">
+            <form action="/almacenes" step="any"method="post">
+            @csrf
+                <h2>Registrar almacén nuevo</h2>
+                <label for="Capacidad" id="label-form">Ingresar capacidad de almacén:</label>
+                <br>
+                <input type="number" id="Capacidad" name="Capacidad" required>
+                <input type="submit" id="Registrar" value="Registrar">
+            </form>
+            <br>
+            @isset($message)
+            <p>{{$message}}</p>
+            @endif 
+            <br><br>
             <div class="ordenes-recientes">
                 <div class="cardHeader">
                     <h2>Almacenes</h2>
@@ -26,6 +41,16 @@
                 <table>
                     <thead>
                         <tr>
+                        @if (session('success_message'))
+                            <div class="alert alert-success">
+                            <p style="color:green"><b>{{ session('success_message') }}</b></p>
+                            </div>
+                        @endif
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                            <p style ="color:red"><b>{{ $errors }}</b></p>
+                            </div>
+                        @endif
                             <th>ID</th>
                             <th>Capacidad</th>
                             <th>Fecha creación</th>
@@ -39,10 +64,24 @@
                                 <td>{{ $almacen->Capacidad }}</td>
                                 <td>{{ $almacen->created_at }}</td>
                                 <td>
-                                <button class="btn btn-primary" id="btnEditar"
-                                onclick="mostrarOpciones({{ $almacen->ID_Almacen }})">Editar</button>
-                                <button class="btn btn-danger" id="btnEliminar"
-                                 onclick="eliminarAlmacen({{ $almacen->ID_Almacen }})">Eliminar</button>
+                                <button class="btn btn-primary btnModificar">Modificar</button>
+                                <button class="btn btn-primary btnCancelar">Cancelar</button>
+                                <form action="/almacenes/{{ $almacen->ID_Almacen }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger btnEliminar">Eliminar</button>
+                                </form>
+                                
+                                <br><br>
+                                <form class="formularioModificar" action="/almacenes/{{ $almacen->ID_Almacen }}" method="post">
+                                    @csrf
+                                    @method('PUT')
+                                    <label for="Capacidad" id="label-form">Capacidad:</label>
+                                    <br>
+                                    <input type="number" id="ModificarCapacidad" name="Capacidad" required value="{{ $almacen->Capacidad }}">
+                                    <br><br>
+                                    <input class="btn btn-primary" type="submit" id="Enviar" value="Enviar">
+                                </form>
                                 </td>
                             </tr>
                             </tr>
@@ -54,19 +93,6 @@
 
             </div>
             <br><br>
-        <form action="/almacenes" step="any"method="post">
-        @csrf
-            <h2>Registrar almacén nuevo</h2>
-            <label for="Capacidad" id="label-form">Ingresar capacidad de almacén:</label>
-            <br>
-            <input type="number" id="Capacidad" name="Capacidad" required>
-            <input type="submit" id="Registrar" value="Registrar">
-        </form>
-        <br>
-        @isset($message)
-           <p>{{$message}}</p>
-        @endif 
-
         </div>
 
 

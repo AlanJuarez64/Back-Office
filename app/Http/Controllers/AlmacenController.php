@@ -40,12 +40,12 @@ class AlmacenController extends Controller
     {
         $almacen = Almacen::findOrFail($id);
         $almacen->delete();
-        
-        return response()->json(['message' => 'Almacén eliminado correctamente'], 200);
+        $message = "Almacén eliminado correctamente";
+        return redirect('/almacenes')->with('success_message', $message);
 
         }
 
-    public function ModificarDatos(Request $request, $id)
+    public function Modificar(Request $request, $id)
     {
         $request->validate([
             'Capacidad' => 'required|integer|min:10'
@@ -54,7 +54,8 @@ class AlmacenController extends Controller
         $almacen = Almacen::findOrFail($id);
         $almacen->update($request->all());
 
-        return response()->json(['message' => 'Almacén modificado con éxito.', 'almacen' => $almacen], 200);
+        $message = "Almacén modificado correctamente";
+        return redirect('/almacenes')->with('success_message', $message);
     }
     
 }

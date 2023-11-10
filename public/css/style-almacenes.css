@@ -68,8 +68,11 @@ table {
 .detalles .ordenes-recientes table tr:last-child{
     border-bottom: none;
 }
-.detalles .ordenes-recientes table tbody tr:hover{
-    background: var(--green);
+
+.detalles .ordenes-recientes table tbody tr:hover {
+    border-radius: 10px;
+    background: var(--yellow);
+    border: 2px solid var(--yellow);
 }
 
 #Registrar {
@@ -88,6 +91,13 @@ table {
     border: 1px solid #ccc;
     border-radius: 5px;
     }
+
+#ModificarCapacidad{
+    width: 20%;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
 /*Diseño responsive*/
 
 @media(max-width:768px){
