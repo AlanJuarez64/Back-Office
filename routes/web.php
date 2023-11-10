@@ -37,6 +37,8 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('almacenes')->group(function (){
         Route::get('/', [AlmacenController::class, 'VerTodo'])->name('almacen.verTodos');
         Route::post('/', [AlmacenController::class, 'Registrar'])->name('almacen.registro');
+        Route::put('/{id}', [AlmacenController::class, 'Modificar'])->name('almacen.modificar');
+        Route::delete('/{id}', [AlmacenController::class, 'Eliminar'])->name('almacen.eliminar');
     });
 });
 
