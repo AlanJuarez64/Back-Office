@@ -30,7 +30,7 @@ class UsuarioController extends Controller
         $validation = Validator::make($request->all(),[
             'name' => 'required|string',
             'nombre_completo' => 'required|string',
-            'ci' => 'required|int|unique:users|max:8',
+            'ci' => 'required|int|unique:users|digits:8',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6',
         ]);
@@ -114,14 +114,23 @@ class UsuarioController extends Controller
         }
 
         $data = $request->validate([
-            'name' => 'string',
-            'email' => 'email|unique:users,email,' . $id,
-            'password' => 'string|min:6',
+            'name' => 'required|string',
+            'nombre_completo' => 'required|string',
+            'ci' => 'required|numeric|digits:8|unique:users,ci,' . $id,
+            'email' => 'required|email|unique:users,email,' . $id,
+            'password' => 'required|string|min:6',
         ]);
 
-        $user->update($data);
+        $user->update([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'Nombre_Completo' => $data['nombre_completo'],
+            'CI' => $data['ci'],
+        ]);
 
-        return response()->json(['message' => 'Usuario actualizado con éxito', 'data' => $user], 200);
+        $message = "El usuario $user->name fue modificado correctamente";
+        return redirect('/usuarios')->with('success_message', $message);
     }
 
 
