@@ -18,4 +18,20 @@ class Empleado extends Model
         return $this->belongsTo(User::class, 'ID_Usuario', 'id');
     }
 
+    public function funcionarioTransporte() {
+        return $this->hasOne(FuncionarioTransporte::class, 'ID_Usuario');
+    }
+
+    public function funcionarioAlmacen() {
+        return $this->hasOne(FuncionarioAlmacen::class, 'ID_Usuario');
+    }
+
+    public function chofer() {
+        return $this->hasOne(Chofer::class, 'ID_Usuario');
+    }
+
+    public function despachador() {
+        return $this->hasOne(Despachador::class, 'ID_Usuario');
+    }
+
 }
