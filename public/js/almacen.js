@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $("tr:gt(45)").hide();
+    $("tr:gt(25)").hide();
     $("#Ocultar").hide();
     $("#verTodos").click(function(e) {
         e.preventDefault();
@@ -9,7 +9,7 @@ $(document).ready(function() {
     });
     $("#Ocultar").click(function(e) {
         e.preventDefault();
-        $("tr:gt(45)").fadeOut();
+        $("tr:gt(25)").fadeOut();
         $("#Ocultar").hide();
         $("#verTodos").fadeIn();
     });
