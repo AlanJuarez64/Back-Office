@@ -16,28 +16,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::middleware(['auth'])->group(function () {
-Route::get('/', function () {
-    return view('home');
-});
-
-Route::prefix('usuarios')->group(function (){
-    
     Route::get('/', function () {
-        return view('usuarios');});
+        return view('home');
+    });
 
-    Route::get('/all', [UsuarioController::class, 'verTodos'])->name('usuarios.verTodos');
-    Route::post('/', [UsuarioController::class,'Registrar'])->name('usuario.registro');
-    Route::get('/{id}', [UsuarioController::class, 'Buscar'])->name('usuario.buscar');
-    Route::delete('/{id}', [UsuarioController::class, 'Eliminar'])->name('usuario.eliminar');
+    Route::prefix('usuarios')->group(function (){
+    
+        Route::get('/', function () {
+            return view('usuarios');});
 
+        Route::get('/all', [UsuarioController::class, 'verTodos'])->name('usuarios.verTodos');
+        Route::post('/', [UsuarioController::class,'Registrar'])->name('usuario.registro');
+        Route::get('/{id}', [UsuarioController::class, 'Buscar'])->name('usuario.buscar');
+        Route::delete('/{id}', [UsuarioController::class, 'Eliminar'])->name('usuario.eliminar');
 
-});
+    });
 
-Route::prefix('almacenes')->group(function (){
-    Route::get('/', [AlmacenController::class, 'VerTodo'])->name('almacen.verTodos');
-    Route::post('/', [AlmacenController::class, 'Registrar'])->name('almacen.registro');
-});
-
+    Route::prefix('almacenes')->group(function (){
+        Route::get('/', [AlmacenController::class, 'VerTodo'])->name('almacen.verTodos');
+        Route::post('/', [AlmacenController::class, 'Registrar'])->name('almacen.registro');
+    });
 });
 
 
