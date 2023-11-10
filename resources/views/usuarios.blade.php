@@ -12,6 +12,15 @@
     <link rel="stylesheet" href="{{asset('css\style-usuarios.css')}}">
     <script src="{{asset('/js/usuarios.js')}}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('.formularioModificar').hide();
+
+        $('.btnModificar').click(function() {
+            $(this).siblings('.formularioModificar').toggle();
+        });
+    });
+    </script>
 </head>
 <body>
 @include("/common/menu")
@@ -46,12 +55,12 @@
             <br><br>
             @if (session('success_message'))
                 <div class="alert alert-success">
-                {{ session('success_message') }}
+                <p style="color:green"><b>{{ session('success_message') }}</b></p>
                 </div>
             @endif
             @if ($errors->any())
             <div class="alert alert-danger">
-                <p style ="color:red">{{ $errors }}</p>
+                <p style ="color:red"><b>{{ $errors }}</b></p>
             </div>
             @endif
 
@@ -71,7 +80,30 @@
                     @method('DELETE')
                     <button type="submit">Eliminar Usuario</button>
                 </form>
-            </div>
+                <button type="button" class="btnModificar">Modificar Usuario</button>
+                <form class="formularioModificar" action="/usuarios/{{ $user->id }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    
+                    <label for="name">Nombre de usuario:</label>
+                    <input type="text" name="name" value="{{ $user->name }}" required>
+
+                    <label for="nombre_completo">Nombre completo:</label>
+                    <input type="text" name="nombre_completo" value="{{ $user->Nombre_Completo }}" required>
+
+                    <label for="ci">CI:</label>
+                    <input type="number" name="ci" value="{{ $user->CI }}" required>
+
+                    <label for="email">Correo electrónico:</label>
+                    <input type="email" name="email" value="{{ $user->email }}" required>
+
+                    <label for="password">Contraseña:</label>
+                    <input type="password" name="password" value="{{ old('password') }}" required>
+
+                    <button type="submit">Enviar</button>
+                    
+                    </form>
+                </div>
                 <br><br>
                 @endforeach
             @endif
