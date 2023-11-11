@@ -30,24 +30,24 @@ class UsuarioController extends Controller
         $validation = Validator::make($request->all(),[
             'name' => 'required|string',
             'nombre_completo' => 'required|string',
-            'ci' => 'required|int|unique:users|digits:8',
-            'email' => 'required|email|unique:users',
+            'ci' => 'required|int|unique:users,ci|digits:8',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
         ]);
         
+        $validation->validate();
     
         $user = $this->createUser($request);
         $empleado = $this-> crearEmpleado($user->id);
         $tipoUsuario = $this->definirTipoUsuario($request->input('tipo_usuario'), $user->id);
 
-        $message = "El usuario $user->name, con caracteristicas de $tipoUsuario creado correctamente";
+        $message = "Usuario $user->name, con características de $tipoUsuario creado correctamente.";
     
         return redirect('/usuarios')->with('success_message', $message);
-        }catch(ValidationException $e) {
+        }catch (ValidationException $e) {
 
             $errors = $e->errors();
-            $message =  "Los datos ingresados son incorrectos";
-            return redirect('/usuarios')->withErrors(['error' => $message]);
+            return redirect('/usuarios')->withErrors([$errors]);
         }
         
     }
