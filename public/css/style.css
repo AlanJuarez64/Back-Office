@@ -252,6 +252,14 @@ nav ul li.hovered a::after {
 
 }
 
+.btnConfirmacionFinal{
+    position: relative;
+    padding: 5px 10px;
+    background: rgb(255, 85, 0);
+    text-decoration: none;
+    color: white;
+    border-radius: 6px;
+}
 
 
 

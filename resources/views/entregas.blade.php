@@ -9,6 +9,8 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <title>Gestión QC</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{asset('/js/entrega.js')}}"></script>
 </head>
 <body>
     @include("/common/menu")
@@ -50,10 +52,10 @@
                                 <br><br>
                                 <button class="btn btn-primary btnConfirmar">Confirmar Entrega</button>
                                 <button class="btn btn-primary btnCancelar">Cancelar</button><br><br>
-                                <form action="/entregas/{{ $articulo->ID_Articulo }}" method="post">
+                                <form action="/entregas/{{ $articulo->ID_Articulo }}" class='ConfirmacionFinal' method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-danger btnEliminar">Confirmar</button>
+                                    <button class="btn-danger btnConfirmacionFinal">Confirmar</button>
                                 </form>
                                 
                                 <br><br>
