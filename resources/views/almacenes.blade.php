@@ -64,8 +64,9 @@
                                 <td>{{ $almacen->Capacidad }}</td>
                                 <td>{{ $almacen->created_at }}</td>
                                 <td>
+                                <br><br>
                                 <button class="btn btn-primary btnModificar">Modificar</button>
-                                <button class="btn btn-primary btnCancelar">Cancelar</button>
+                                <button class="btn btn-primary btnCancelar">Cancelar</button><br><br>
                                 <form action="/almacenes/{{ $almacen->ID_Almacen }}" method="post">
                                     @csrf
                                     @method('DELETE')

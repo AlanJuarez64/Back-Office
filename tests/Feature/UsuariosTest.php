@@ -1,9 +1,17 @@
 <?php
 
+//Falta arreglar el testing de la funcion modificar
+
+
 namespace Tests\Feature;
 
 use App\Models\User;
 use App\Models\Empleado;
+use App\Models\FuncionarioTransporte;
+use App\Models\FuncionarioAlmacen;
+use App\Models\Chofer;
+use App\Models\Despachador;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Faker\Factory as Faker;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -56,6 +64,55 @@ class UsuariosTest extends TestCase
 
         $response = $this->post('/usuarios', $data);
         $response->assertSessionHasErrors(['name', 'ci' ,'email', 'password']);
+    }
+
+
+    public function testModificarUsuario()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $newData = [
+            'name' => 'nuevo_nombre',
+            'nombre_completo' => 'Nuevo Nombre Completo',
+            'ci' => '23334444',
+            'email' => 'nuevo_email@example.com',
+            'password' => 'nueva_contraseña',
+        ];
+
+        $response = $this->put("/usuarios/{$user->id}", $newData);
+        
+        $updatedUser = User::find($user->id);
+
+        $response = $this->get("/usuarios");
+
+        $this->assertEquals($newData['name'], $updatedUser->name);
+        $this->assertEquals($newData['nombre_completo'], $updatedUser->Nombre_Completo);
+        $this->assertEquals($newData['ci'], $updatedUser->CI);
+        $this->assertEquals($newData['email'], $updatedUser->email);
+        $this->assertTrue(Hash::check($newData['password'], $updatedUser->password));
+
+        $response->assertSessionHas('success_message', "El usuario {$user->name} fue modificado correctamente");
+    }
+
+
+    public function testEliminarUsuario()
+    {   
+        $usuarioIniciado = User::factory()->create();
+        $this->actingAs($usuarioIniciado);
+
+        $user = User::factory()->create();
+        $empleado = Empleado::factory()->create(['ID_Usuario' => $user->id]);
+        FuncionarioAlmacen::factory()->create(['ID_Usuario' => $user->id]);
+
+        $response = $this->delete("/usuarios/{$user->id}");
+
+        $response->assertRedirect('/usuarios');
+        $response->assertSessionHas('success_message', 'Usuario eliminado correctamente');
+
+        $this->assertDatabaseMissing('users', ['id' => $user->id]);
+        $this->assertDatabaseMissing('empleados', ['ID_Usuario' => $user->id]);
+        $this->assertDatabaseMissing('Funcionario_Almacen', ['ID_Usuario' => $user->id]);
     }
 
 }
