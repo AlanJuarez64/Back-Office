@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('entregas')->group(function (){
         Route::get('/', [ArticuloController::class, 'VerTodo'])->name('articulo.verTodos');
+        Route::delete('/{id}', [ArticuloController::class, 'ConfirmarEntrega'])->name('articulo.confirmar');
     });
 
 });
