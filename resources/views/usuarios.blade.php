@@ -15,9 +15,23 @@
     <script>
     $(document).ready(function() {
         $('.formularioModificar').hide();
+        $('#btnOcultarErrores').hide();
+        $('.errores').hide();
 
         $('.btnModificar').click(function() {
-            $(this).siblings('.formularioModificar').toggle();
+            $(this).siblings('.formularioModificar').slideDown(1000);
+        });
+
+        $('#btnErrores').click(function() {
+            $(this).siblings('.errores').slideDown(1000);
+            $('#btnErrores').hide();
+            $('#btnOcultarErrores').show();
+        });
+
+        $('#btnOcultarErrores').click(function() {
+            $(this).siblings('.errores').slideUp(1000);
+            $('#btnOcultarErrores').hide();
+            $('#btnErrores').show();
         });
     });
     </script>
@@ -60,7 +74,14 @@
             @endif
             @if ($errors->any())
             <div class="alert alert-danger">
-                <p style ="color:red"><b>{{ $errors }}</b></p>
+                <p style ="color:red"><b>Error: Los datos fueron ingresados de forma incorrecta</b></p>
+                <button id="btnErrores">Ver detalles</button>
+                <button id="btnOcultarErrores">Ocultar</button>
+                <br><br>
+                @foreach ($errors->all() as $error)
+                    <p class="errores">{{ $error }}</p>
+                    <br>
+                @endforeach
             </div>
             @endif
 
