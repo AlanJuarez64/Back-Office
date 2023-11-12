@@ -39,6 +39,14 @@ class AlmacenController extends Controller
     public function Eliminar($id)
     {
         $almacen = Almacen::findOrFail($id);
+
+        $registro = Almacen::with('funcionariosAlmacen')->findOrFail($id);
+
+        $registro->funcionariosAlmacen->each(function ($funcionario) {
+            $funcionario->ID_Almacen = null;
+            $funcionario->save();
+        });
+
         $almacen->delete();
         $message = "Almacén eliminado correctamente";
         return redirect('/almacenes')->with('success_message', $message);
