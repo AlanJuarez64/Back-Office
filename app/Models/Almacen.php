@@ -14,4 +14,9 @@ class Almacen extends Model
     protected $fillable = [
         'Capacidad',
     ];
+
+    public function funcionariosAlmacen()
+    {
+        return $this->hasMany(FuncionarioAlmacen::class, 'ID_Almacen');
+    }
 }
