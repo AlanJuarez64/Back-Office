@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\AlmacenController;
+use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +41,11 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/{id}', [AlmacenController::class, 'Modificar'])->name('almacen.modificar');
         Route::delete('/{id}', [AlmacenController::class, 'Eliminar'])->name('almacen.eliminar');
     });
+
+    Route::prefix('entregas')->group(function (){
+        Route::get('/', [ArticuloController::class, 'VerTodo'])->name('articulo.verTodos');
+    });
+
 });
 
 
