@@ -28,6 +28,12 @@
                         <span class="titulo">Almacenes</span>
                     </a>
                 </li>
+                <li>
+                    <a href="/entregas">
+                        <span class="icono"><ion-icon name="bag-check-outline"></ion-icon></span>
+                        <span class="titulo">Entregas</span>
+                    </a>
+                </li>
 
                 <li>
                     <a href="#">
