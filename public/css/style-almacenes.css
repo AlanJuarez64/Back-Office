@@ -62,6 +62,12 @@ table {
     margin-top: 10px;
 
 }
+
+.detalles .ordenes-recientes table th {
+    border-right: 25px solid transparent;
+    padding-right: 25px;
+}
+
 .detalles .ordenes-recientes table tr{
     border-bottom: 1px solid rgba(0,0,0,0.1);
 }
