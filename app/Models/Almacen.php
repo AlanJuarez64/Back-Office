@@ -19,4 +19,9 @@ class Almacen extends Model
     {
         return $this->hasMany(FuncionarioAlmacen::class, 'ID_Almacen');
     }
+
+    public function productos() {
+        return $this->belongsToMany(Producto::class, 'Guarda', 'ID_Almacen', 'ID_Producto');
+    }
+
 }
