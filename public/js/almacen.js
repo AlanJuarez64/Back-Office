@@ -1,5 +1,6 @@
 $(document).ready(function() {
     $('.formularioModificar').hide();
+    $('.Articulos').hide();
     $('.btnCancelar').hide();
     $("tr:gt(25)").hide();
     $("#Ocultar").hide();
@@ -17,13 +18,21 @@ $(document).ready(function() {
     });
 
     $('.btnModificar').click(function() {
-        $(this).siblings('.formularioModificar').slideDown(1000);
+        $(this).siblings('.formularioModificar').slideDown(500);
+        $(this).siblings('.btnCancelar').show();
+        $(this).hide();
+    });
+
+    $('.btnVerArticulos').click(function() {
+        $(this).siblings('.Articulos').slideDown(500);
         $(this).siblings('.btnCancelar').show();
         $(this).hide();
     });
 
     $('.btnCancelar').click(function() {
-        $(this).siblings('.formularioModificar').slideUp(1000);
+        $(this).siblings('.Articulos').slideUp(500);
+        $(this).siblings('.formularioModificar').slideUp(500);
+        $(this).siblings('.btnVerArticulos').show();
         $(this).siblings('.btnModificar').show();
         $(this).hide();
     });

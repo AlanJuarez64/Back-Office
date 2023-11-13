@@ -65,6 +65,9 @@
                                 <td>{{ $almacen->created_at }}</td>
                                 <td>
                                 <br><br>
+                                <form action="/almacenes/{{ $almacen->ID_Almacen }}" method="get">
+                                    <button class="btn btn-primary btnVerMas">Ver mas</button><br><br>
+                                </form>
                                 <button class="btn btn-primary btnModificar">Modificar</button>
                                 <button class="btn btn-primary btnCancelar">Cancelar</button><br><br>
                                 <form action="/almacenes/{{ $almacen->ID_Almacen }}" method="post">
@@ -73,7 +76,7 @@
                                     <button class="btn btn-danger btnEliminar">Eliminar</button>
                                 </form>
                                 
-                                <br><br>
+                                <br>
                                 <form class="formularioModificar" action="/almacenes/{{ $almacen->ID_Almacen }}" method="post">
                                     @csrf
                                     @method('PUT')
