@@ -13,7 +13,8 @@ class FuncionarioAlmacen extends Model
     protected $primaryKey = 'ID_Usuario';
 
     protected $fillable = [
-        'ID_Usuario',
+        'ID_Almacen',
+        
     ];
 
     public function empleado()
