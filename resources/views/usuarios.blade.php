@@ -12,36 +12,13 @@
     <link rel="stylesheet" href="{{asset('css\style-usuarios.css')}}">
     <script src="{{asset('/js/usuarios.js')}}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script>
-    $(document).ready(function() {
-        $('.formularioModificar').hide();
-        $('#btnOcultarErrores').hide();
-        $('.errores').hide();
-
-        $('.btnModificar').click(function() {
-            $(this).siblings('.formularioModificar').slideDown(1000);
-        });
-
-        $('#btnErrores').click(function() {
-            $(this).siblings('.errores').slideDown(1000);
-            $('#btnErrores').hide();
-            $('#btnOcultarErrores').show();
-        });
-
-        $('#btnOcultarErrores').click(function() {
-            $(this).siblings('.errores').slideUp(1000);
-            $('#btnOcultarErrores').hide();
-            $('#btnErrores').show();
-        });
-    });
-    </script>
+    <script src="{{asset('/js/usuarios.js')}}"></script>
 </head>
 <body>
 @include("/common/menu")
 <div class="main">
         @include("/common/topbar")
         <div class="gestor-usuarios">
-            <!-- Formulario para agregar usuarios -->
             <form id="agregar-usuario-form" method="post" action="/usuarios/">
                 <h2>Registrar Usuario</h2>
                 @csrf

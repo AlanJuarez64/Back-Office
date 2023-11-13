@@ -1,20 +1,21 @@
-document.getElementById('agregar-usuario-form').addEventListener('submit', function (e) {
-    e.preventDefault();
+$(document).ready(function() {
+    $('.formularioModificar').hide();
+    $('#btnOcultarErrores').hide();
+    $('.errores').hide();
 
-    const nombre = document.getElementById('name').value;
-    const correo = document.getElementById('email').value;
+    $('.btnModificar').click(function() {
+        $(this).siblings('.formularioModificar').slideDown(1000);
+    });
 
-});
+    $('#btnErrores').click(function() {
+        $(this).siblings('.errores').slideDown(1000);
+        $('#btnErrores').hide();
+        $('#btnOcultarErrores').show();
+    });
 
-
-document.addEventListener("DOMContentLoaded", function () {
-document.getElementById("formEliminar").addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    var idBorrar = document.getElementById("idUser").value;
-
-    document.getElementById("formEliminar").action = "/usuarios/"+idBorrar;
-    document.getElementById("formEliminar").method = "DELETE";
-    document.getElementById("formEliminar").submit();
-});
+    $('#btnOcultarErrores').click(function() {
+        $(this).siblings('.errores').slideUp(1000);
+        $('#btnOcultarErrores').hide();
+        $('#btnErrores').show();
+    });
 });
