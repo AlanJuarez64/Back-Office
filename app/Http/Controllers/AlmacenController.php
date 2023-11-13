@@ -24,10 +24,20 @@ class AlmacenController extends Controller
     public function verMas($id)
     {
         $almacen = Almacen::findOrFail($id);
+        $productos = $almacen->productos;
+
+        if ($almacen->funcionariosAlmacen->isEmpty()) {
+            $message = "No se ha asignado un funcionario al almacén.";
+            return view('almacenInfo', [
+                'almacen' => $almacen, 
+                'productos' => $productos,
+                'message' => $message]);
+        }
+        
         $funcionarioAlmacen = $almacen->funcionariosAlmacen->first();
         $empleado = $funcionarioAlmacen->empleado;
         $user = $empleado -> user;
-        $productos = $almacen->productos;
+        
 
         return view('almacenInfo' , [
             'almacen' => $almacen, 
@@ -78,6 +88,33 @@ class AlmacenController extends Controller
 
         $message = "Almacén modificado correctamente";
         return redirect('/almacenes')->with('success_message', $message);
+    }
+
+    public function CambiarFuncionario($id, Request $request){
+        $almacen = Almacen::findOrFail($id);
+        $funcionarioActual = $almacen->funcionariosAlmacen->first();
+
+        $request->validate([
+            'idUsuario' => 'required|int|min:1'
+        ]);
+
+        $idFuncionarioNuevo = $request ->input("idUsuario");
+        $nuevoFuncionario = FuncionarioAlmacen::where('ID_Usuario', $idFuncionarioNuevo)->first();
+
+        if (!$nuevoFuncionario) {
+            $message = "El usuario no existe o no es un funcionario de almacén.";
+            return redirect("/almacenes/$id")->withErrors(['error_message' => $message]);
+        }
+
+        if ($funcionarioActual) {
+            $funcionarioActual->update(['ID_Almacen' => null]);
+        }
+
+        $nuevoFuncionario->update(['ID_Almacen' => $almacen->ID_Almacen]);
+            
+        $message = "Funcionario asignado correctamente";
+        return redirect("/almacenes/$id")->with('success_message', $message);
+
     }
     
 }

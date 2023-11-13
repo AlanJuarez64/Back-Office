@@ -40,6 +40,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{id}', [AlmacenController::class, 'VerMas'])->name('almacen.verMas');
         Route::post('/', [AlmacenController::class, 'Registrar'])->name('almacen.registro');
         Route::put('/{id}', [AlmacenController::class, 'Modificar'])->name('almacen.modificar');
+        Route::put('/{id}/funcionario', [AlmacenController::class, 'CambiarFuncionario'])->name('almacen.cambiarFuncionario');
         Route::delete('/{id}', [AlmacenController::class, 'Eliminar'])->name('almacen.eliminar');
     });
 

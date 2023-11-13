@@ -1,4 +1,3 @@
-<!-- Falta terminar el formulario de cambio de funcionario -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -22,23 +21,44 @@
                 <div class="cardHeader">
                     <h2>Almacen N° {{$almacen->ID_Almacen}}</h2>
                 </div>
-                @isset($message)
-                    <p>{{$message}}</p>
-                @endif 
+                @if (session('success_message'))
+                    <div class="alert alert-success">
+                    <p style="color:green"><b>{{ session('success_message') }}</b></p>
+                </div>
+                @endif
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <br>
+                    <p style ="color:red"><b>Error: El funcionario ingresado es incorrecto</b></p><br><br>
+                    <button class="btn btn-primary btnErrores">Ver detalles</button>
+                    <button class="btn btn-primary btnOcultarErrores">Ocultar</button>
+                    <br><br>
+                    @foreach ($errors->all() as $error)
+                        <p class="errores">{{ $error }}</p>
+                        <br><br>
+                    @endforeach
+                </div>
+                @endif
+                @if(isset($user))
                 <h3>Funcionario responsable:</h3>
                 <li><b>{{$user->Nombre_Completo}}</b></li>
+                <br>
                 <h3>ID de Funcionario:</h3>
                 <li><b>{{$funcionarioAlmacen->ID_Usuario}}</b></li>
+                <br><br>
+                @endif
                 <button class="btn btn-primary btnCambiarFuncionario">Cambiar funcionario responsable</button>
-                <form class="cambiarFuncionario">
+                <button class="btn btn-primary btnCancelar">Cancelar</button>
+                <br><br>
+                <form class="cambiarFuncionario" action="/almacenes/{{$almacen->ID_Almacen}}/funcionario" method="post">
                     @csrf
                     @method('PUT')
-                    <label for="nuevoFuncionario" id="label-form">ID Funcionario de funcionario nuevo:</label>
-                    <input type="number" id="nuevoFuncionario" name="nuevoFuncionario" required value="{{ $funcionarioAlmacen->ID_Usuario }}">
+                    <label for="idUsuario" id="label-form">ID Funcionario de funcionario nuevo:</label>
+                    <input type="number" id="idUsuario" name="idUsuario" required value="0">
                     <br><br>
                     <input class="btn btn-primary" type="submit" id="Enviar" value="Enviar">
                 </form>
-
+                
                 <br>
                 <h3>Productos: </h3>
                 <table>
