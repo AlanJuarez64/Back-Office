@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Almacen;
+use App\Models\User;
+use App\Models\Empleado;
+use App\Models\Chofer;
+use App\Models\FuncionarioAlmacen;
+use App\Models\Producto;
 
 class AlmacenController extends Controller
 {
@@ -16,11 +21,20 @@ class AlmacenController extends Controller
     }
 
 
-    public function Buscar($id)
+    public function verMas($id)
     {
         $almacen = Almacen::findOrFail($id);
+        $funcionarioAlmacen = $almacen->funcionariosAlmacen->first();
+        $empleado = $funcionarioAlmacen->empleado;
+        $user = $empleado -> user;
+        $productos = $almacen->productos;
 
-        return response()->json($almacen, 200);
+        return view('almacenInfo' , [
+            'almacen' => $almacen, 
+            'productos' => $productos,
+            'funcionarioAlmacen' => $funcionarioAlmacen,
+            'user' => $user
+        ]);
     }
 
     
