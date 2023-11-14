@@ -67,7 +67,7 @@ class UsuarioController extends Controller
 
     private function crearEmpleado($userId){
         $empleado = new Empleado();
-        $empleado->ID_Usuario = $userId;
+        $empleado->id = $userId;
         $empleado->save();
 
         return $empleado;
@@ -86,7 +86,7 @@ class UsuarioController extends Controller
         if (array_key_exists($tipoUsuario, $clasesdeTiposUsuario)) {
             $obtenerClasesDeUsuario = $clasesdeTiposUsuario[$tipoUsuario];
             $usuario = new $obtenerClasesDeUsuario;
-            $usuario->ID_Usuario = $idEmpleado;
+            $usuario->id = $idEmpleado;
             $usuario->save();
             return $tipoUsuario;
         }
@@ -137,17 +137,17 @@ class UsuarioController extends Controller
     public function Eliminar($id) {
         try{
         $user = User::findOrFail($id);
-        $empleado = Empleado::where('ID_Usuario', $id)->first();
+        $empleado = Empleado::where('id', $id)->first();
 
         if ($empleado) {
             if ($empleado->funcionarioTransporte) {
-                FuncionarioTransporte::where('ID_Usuario', $id)->delete();
+                FuncionarioTransporte::where('id', $id)->delete();
             } elseif ($empleado->funcionarioAlmacen) {
-                FuncionarioAlmacen::where('ID_Usuario', $id)->delete();
+                FuncionarioAlmacen::where('id', $id)->delete();
             } elseif ($empleado->chofer) {
-                Chofer::where('ID_Usuario', $id)->delete();
+                Chofer::where('id', $id)->delete();
             } elseif ($empleado->despachador) {
-                Despachador::where('ID_Usuario', $id)->delete();
+                Despachador::where('id', $id)->delete();
             }
 
             $empleado->delete();

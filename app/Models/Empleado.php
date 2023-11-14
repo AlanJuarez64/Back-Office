@@ -10,28 +10,28 @@ class Empleado extends Model
     use HasFactory;
     protected $table = 'Empleados';
 
-    protected $primaryKey = 'ID_Usuario';
+    protected $primaryKey = 'id';
 
     public $timestamps = true;
     public function user()
     {
-        return $this->belongsTo(User::class, 'ID_Usuario', 'id');
+        return $this->belongsTo(User::class, 'id', 'id');
     }
 
     public function funcionarioTransporte() {
-        return $this->hasOne(FuncionarioTransporte::class, 'ID_Usuario');
+        return $this->hasOne(FuncionarioTransporte::class, 'id');
     }
 
     public function funcionarioAlmacen() {
-        return $this->hasOne(FuncionarioAlmacen::class, 'ID_Usuario');
+        return $this->hasOne(FuncionarioAlmacen::class, 'id');
     }
 
     public function chofer() {
-        return $this->hasOne(Chofer::class, 'ID_Usuario');
+        return $this->hasOne(Chofer::class, 'id');
     }
 
     public function despachador() {
-        return $this->hasOne(Despachador::class, 'ID_Usuario');
+        return $this->hasOne(Despachador::class, 'id');
     }
 
 }

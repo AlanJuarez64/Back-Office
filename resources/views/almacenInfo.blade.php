@@ -39,12 +39,15 @@
                     @endforeach
                 </div>
                 @endif
+                @if(isset($message))
+                    <p>{{$message}}</p>
+                @endif
                 @if(isset($user))
                 <h3>Funcionario responsable:</h3>
                 <li><b>{{$user->Nombre_Completo}}</b></li>
                 <br>
                 <h3>ID de Funcionario:</h3>
-                <li><b>{{$funcionarioAlmacen->ID_Usuario}}</b></li>
+                <li><b>{{$funcionarioAlmacen->id}}</b></li>
                 <br><br>
                 @endif
                 <button class="btn btn-primary btnCambiarFuncionario">Cambiar funcionario responsable</button>
