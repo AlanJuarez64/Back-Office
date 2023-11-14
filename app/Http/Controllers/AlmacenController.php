@@ -99,7 +99,7 @@ class AlmacenController extends Controller
         ]);
 
         $idFuncionarioNuevo = $request ->input("idUsuario");
-        $nuevoFuncionario = FuncionarioAlmacen::where('ID_Usuario', $idFuncionarioNuevo)->first();
+        $nuevoFuncionario = FuncionarioAlmacen::where('id', $idFuncionarioNuevo)->first();
 
         if (!$nuevoFuncionario) {
             $message = "El usuario no existe o no es un funcionario de almacén.";

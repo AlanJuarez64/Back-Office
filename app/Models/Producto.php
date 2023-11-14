@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Producto extends Model
 {
     use HasFactory;
-    protected $table = 'Producto';
+    protected $table = 'Productos';
     protected $primaryKey = 'ID_Producto';
 
     protected $fillable = [
-        'ID_Usuario',
+        'id',
         'Peso',
         'Cantidad',
         'created_at',

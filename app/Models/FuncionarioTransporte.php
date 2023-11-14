@@ -10,15 +10,15 @@ class FuncionarioTransporte extends Model
     use HasFactory;
     protected $table = 'Funcionario_Transporte';
 
-    protected $primaryKey = 'ID_Usuario';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'ID_Usuario',
+        'id',
     ];
 
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'ID_Usuario');
+        return $this->belongsTo(Empleado::class, 'id');
     }
 }

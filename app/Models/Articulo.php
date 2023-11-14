@@ -14,7 +14,7 @@ class Articulo extends Model
     protected $primaryKey = 'ID_Articulo';
 
     protected $fillable = [
-        'ID_Usuario',
+        'id',
         'ID_Producto',
         'Estado',
         'created_at',
