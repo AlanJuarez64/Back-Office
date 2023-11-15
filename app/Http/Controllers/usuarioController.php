@@ -75,17 +75,17 @@ class UsuarioController extends Controller
 
     private function definirTipoUsuario($tipoUsuario, $idEmpleado){
         
-        $clasesdeTiposUsuario = [
-            'funcionario_de_transporte' => FuncionarioTransporte::class,
-            'funcionario_de_almacen' => FuncionarioAlmacen::class,
-            'chofer' => Chofer::class,
-            'despachador' => Despachador::class,
-        ];
-        
-        
-        if (array_key_exists($tipoUsuario, $clasesdeTiposUsuario)) {
-            $obtenerClasesDeUsuario = $clasesdeTiposUsuario[$tipoUsuario];
-            $usuario = new $obtenerClasesDeUsuario;
+        if($tipoUsuario == 'funcionario_de_almacen'){
+            $usuario = new FuncionarioAlmacen();
+            $usuario->id = $idEmpleado;
+            $usuario->save();
+            return $tipoUsuario;
+        }
+        if($tipoUsuario == 'chofer'){
+            $funcionarioTransporte = new FuncionarioTransporte();
+            $usuario = new Chofer();
+            $funcionarioTransporte->id = $idEmpleado;
+            $funcionarioTransporte->save();
             $usuario->id = $idEmpleado;
             $usuario->save();
             return $tipoUsuario;
