@@ -102,8 +102,8 @@ class UsuariosTest extends TestCase
         $this->actingAs($usuarioIniciado);
 
         $user = User::factory()->create();
-        $empleado = Empleado::factory()->create(['ID_Usuario' => $user->id]);
-        FuncionarioAlmacen::factory()->create(['ID_Usuario' => $user->id]);
+        $empleado = Empleado::factory()->create(['id' => $user->id]);
+        FuncionarioAlmacen::factory()->create(['id' => $user->id]);
 
         $response = $this->delete("/usuarios/{$user->id}");
 
@@ -111,8 +111,8 @@ class UsuariosTest extends TestCase
         $response->assertSessionHas('success_message', 'Usuario eliminado correctamente');
 
         $this->assertDatabaseMissing('users', ['id' => $user->id]);
-        $this->assertDatabaseMissing('empleados', ['ID_Usuario' => $user->id]);
-        $this->assertDatabaseMissing('Funcionario_Almacen', ['ID_Usuario' => $user->id]);
+        $this->assertDatabaseMissing('empleados', ['id' => $user->id]);
+        $this->assertDatabaseMissing('Funcionario_Almacen', ['id' => $user->id]);
     }
 
 }
