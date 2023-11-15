@@ -17,7 +17,7 @@ class FuncionarioAlmacenFactory extends Factory
     public function definition()
     {
         return [
-            'ID_Usuario' => function () {
+            'id' => function () {
                 return \App\Models\User::factory()->create()->id;
             },
             'ID_Almacen' => function () {
