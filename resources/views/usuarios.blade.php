@@ -36,8 +36,6 @@
                 <label for="tipo_usuario" id="label-form">Tipo de Usuario:</label><br>
                 <select name="tipo_usuario" id="tipo_usuario">
                     <option value="chofer">Chofer</option>
-                    <option value="despachador">Despachador</option>
-                    <option value="funcionario_de_transporte">Funcionario de transporte</option>
                     <option value="funcionario_de_almacen">Funcionario de almacen</option>
                 </select>
                 <br><br>
