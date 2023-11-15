@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Chofer extends Model
 {
     use HasFactory;
-    protected $table = 'Chofer';
+    protected $table = 'Choferes';
 
     protected $primaryKey = 'id';
 
